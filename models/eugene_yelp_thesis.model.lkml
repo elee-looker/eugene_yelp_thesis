@@ -44,6 +44,18 @@ explore: review {
     sql_on: ${review.business_id} = ${business.business_id} ;;
     relationship: many_to_one
   }
+
+  join: categories {
+    type: left_outer
+    sql_on: ${business.business_id} = ${categories.business_id} ;;
+    relationship: one_to_many
+  }
+
+  join: review_count_DT {
+    type: left_outer
+    sql_on: ${business.business_id} = ${review_count_DT.business_id} ;;
+    relationship: one_to_one
+  }
 }
 
 explore: tip {

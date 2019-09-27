@@ -1,6 +1,3 @@
-# If necessary, uncomment the line below to include explore_source.
-# include: "eugene_yelp_thesis.model.lkml"
-
 view: review_count_DT {
   derived_table: {
     explore_source: review {
@@ -12,10 +9,6 @@ view: review_count_DT {
         sql: RANK() OVER (ORDER BY count DESC) ;;
       }
       filters: {
-        field: categories.categories
-        value: "Restaurants"
-      }
-      filters: {
         field: business.state
         value: "NV"
       }
@@ -23,8 +16,21 @@ view: review_count_DT {
         field: business.city
         value: "Las Vegas"
       }
+
+      bind_filters: {
+        from_field: review_count_DT.rank_category
+        to_field: categories.split_categories
+      }
     }
   }
+
+  filter: rank_category {
+    type: string
+    suggest_explore: review
+    suggest_dimension: categories.split_categories
+    sql: {% condition %} ${categories.split_categories} {% endcondition %} ;;
+  }
+
   dimension: business_id {
     hidden: yes
   }

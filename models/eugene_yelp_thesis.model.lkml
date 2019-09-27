@@ -33,6 +33,7 @@ explore: checkin {
 }
 
 explore: review {
+  always_join: [categories]
   join: user {
     type: left_outer
     sql_on: ${review.user_id} = ${user.user_id} ;;
@@ -43,6 +44,18 @@ explore: review {
     type: left_outer
     sql_on: ${review.business_id} = ${business.business_id} ;;
     relationship: many_to_one
+  }
+
+  join: business__hours {
+    view_label: "Business: Hours"
+    sql: LEFT JOIN UNNEST([${business.hours}]) as business__hours ;;
+    relationship: one_to_one
+  }
+
+  join: business__attributes {
+    view_label: "Business: Attributes"
+    sql: LEFT JOIN UNNEST([${business.attributes}]) as business__attributes ;;
+    relationship: one_to_one
   }
 
   join: categories {

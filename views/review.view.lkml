@@ -59,6 +59,11 @@ view: review {
     sql: ${TABLE}.user_id ;;
   }
 
+  measure: average_stars {
+    type: average
+    sql: ${stars} ;;
+  }
+
   measure: count {
     type: count
     drill_fields: [review_id, user.user_id, user.name, business.name, business.business_id]

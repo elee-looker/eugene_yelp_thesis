@@ -21,6 +21,17 @@ view: business {
   dimension: categories {
     type: string
     sql: ${TABLE}.categories ;;
+    html:
+    {% assign words = {{value}} | split: ',' %}
+    {% assign numwords = 0 %}
+    {% for word in words %}
+    {{ word }},
+    {% assign numwords = numwords | plus: 1 %}
+    {% assign mod = numwords | modulo: 4 %}
+    {% if mod == 0 %}
+    <br>
+    {% endif %}
+    {% endfor %} ;;
   }
 
   dimension: city {
@@ -48,9 +59,16 @@ view: business {
     sql: ${TABLE}.longitude ;;
   }
 
+  dimension: location {
+    type: location
+    sql_latitude: ${latitude} ;;
+    sql_longitude: ${longitude} ;;
+  }
+
   dimension: name {
     type: string
     sql: ${TABLE}.name ;;
+    drill_fields: [business.name,business.address,business.categories,business__attributes.restaurants_price_range2,review.average_stars]
   }
 
   dimension: postal_code {

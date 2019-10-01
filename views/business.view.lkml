@@ -25,7 +25,11 @@ view: business {
     {% assign words = {{value}} | split: ',' %}
     {% assign numwords = 0 %}
     {% for word in words %}
-    {{ word }},
+      {% if word == words.last %}
+      {{ word }}
+      {% else %}
+      {{ word }},
+      {% endif %}
     {% assign numwords = numwords | plus: 1 %}
     {% assign mod = numwords | modulo: 4 %}
     {% if mod == 0 %}

@@ -62,6 +62,7 @@ view: review {
   measure: average_stars {
     type: average
     sql: ${stars} ;;
+    html: {{ value | round: 2 }}<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/FA_star.svg/15px-FA_star.svg.png"> ;;
   }
 
   measure: count {

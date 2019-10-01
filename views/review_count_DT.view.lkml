@@ -28,7 +28,10 @@ view: review_count_DT {
     type: string
     suggest_explore: review
     suggest_dimension: categories.split_categories
-    sql: {% condition %} ${categories.split_categories} {% endcondition %} ;;
+    sql: {% condition %} ${categories.split_categories} {% endcondition %};;
+#     AND ${rank} IN ({{ left_rank._parameter_value }},{{ right_rank._parameter_value }})
+#          {% if left_rank._parameter_value == nil AND right_rank._parameter_value == nil %}
+#          {% endif %}
   }
 
   dimension: business_id {

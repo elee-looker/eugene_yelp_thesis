@@ -83,7 +83,7 @@ view: review {
   measure: average_stars {
     type: average
     sql: ${stars} ;;
-    html: {{ value | round: 2 }}<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/FA_star.svg/15px-FA_star.svg.png"> ;;
+    html: <p style="color: #247ACA; background-color:#FFFEF2; font-size: 200%; text-align:center; font-weight:bold">{{ value | round: 2 }}<img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/apple/129/white-medium-star_2b50.png" width=40px height=40px></p> ;;
   }
 
   measure: max_date {
@@ -98,6 +98,7 @@ view: review {
 
   measure: count {
     type: count
+    html:  <p style="font-size: 200%; text-align:center; font-weight:bold">{{ rendered_value }}</p> ;;
     drill_fields: [user.name, date_date, stars, text]
   }
 
@@ -105,6 +106,7 @@ view: review {
     type: number
     sql: SQRT(1/(${count}-1) * sum(POW(${stars} - ${review_count_DT.average_stars}, 2))) ;;
     value_format_name: decimal_3
+    html:  <p style="font-size: 200%; text-align:center; font-weight:bold">{{rendered_value}}</p> ;;
     drill_fields: [user.name, date_date, stars, text]
   }
 }

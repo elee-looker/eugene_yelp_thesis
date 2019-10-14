@@ -47,7 +47,7 @@ view: review_count_DT {
 
   dimension: rank {
     type: number
-    html: <strong><p style="color: #C70039; font-size: 250%; font-family: garamond">{{ rendered_value }}</p></strong> ;;
+    html: <strong><p style="color: #C70039; font-size: 250%">{{ rendered_value }}</p></strong> ;;
   }
 
   dimension: count {

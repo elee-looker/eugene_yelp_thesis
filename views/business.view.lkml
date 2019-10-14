@@ -22,6 +22,7 @@ view: business {
     type: string
     sql: ${TABLE}.categories ;;
     html:
+    <p style="font-size: 150%">
     {% assign words = {{value}} | split: ',' %}
     {% assign numwords = 0 %}
     {% for word in words %}
@@ -35,7 +36,8 @@ view: business {
     {% if mod == 0 %}
     <br>
     {% endif %}
-    {% endfor %} ;;
+    {% endfor %}
+    </p>;;
   }
 
   dimension: city {

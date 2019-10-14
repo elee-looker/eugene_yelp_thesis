@@ -73,7 +73,7 @@ view: business {
     type: string
     sql: ${TABLE}.name ;;
     html: <strong><p style="color: #C70039; font-size: 250%">{{ rendered_value }}</p></strong> ;;
-    drill_fields: [business.name,business.address,business.categories,business__attributes.restaurants_price_range2,review.average_stars]
+#     drill_fields: [business.name,business.address,business.categories,business__attributes.restaurants_price_range2]
   }
 
   dimension: postal_code {

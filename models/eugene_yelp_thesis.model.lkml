@@ -34,6 +34,11 @@ explore: checkin {
 
 explore: review {
   always_join: [categories]
+#   always_filter: {
+#     filters: {
+#       field: review.last_x_days
+#     }
+#   }
   join: user {
     type: left_outer
     sql_on: ${review.user_id} = ${user.user_id} ;;

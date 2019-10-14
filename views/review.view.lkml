@@ -1,6 +1,16 @@
 view: review {
-  sql_table_name: yelp_new.review ;;
+  sql_table_name: yelp_new.review;;
   drill_fields: [review_id]
+
+  filter: last_x_days {
+    type: yesno
+    sql: ${date_date} >= DATE_ADD(${review_count_DT.max_date}, INTERVAL -60 DAY) ;;
+  }
+
+#   dimension: check_yesno {
+#     type: number
+#     sql: {% if _filters['last_x_days']=="TRUE" %}0{% else %}1{% endif %} ;;
+#   }
 
   dimension: review_id {
     primary_key: yes
@@ -59,10 +69,26 @@ view: review {
     sql: ${TABLE}.user_id ;;
   }
 
+  dimension: adv_metrics {
+    type: string
+    sql: "Link to Advanced Metrics Page" ;;
+    html: <a href="/dashboards/451?Food Category={{ _filters['review_count_DT.rank_category'] }}&Rank={{ _filters['review_count_DT.rank'] }}">{{ value }}</a> ;;
+  }
+
   measure: average_stars {
     type: average
     sql: ${stars} ;;
     html: {{ value | round: 2 }}<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/FA_star.svg/15px-FA_star.svg.png"> ;;
+  }
+
+  measure: max_date {
+    type: date
+    sql: MAX(${date_date}) ;;
+  }
+
+  measure: min_date {
+    type: date
+    sql: MIN(${date_date}) ;;
   }
 
   measure: count {
@@ -73,5 +99,7 @@ view: review {
   measure: std_dev {
     type: number
     sql: SQRT(1/(${count}-1) * sum(POW(${stars} - ${review_count_DT.average_stars}, 2))) ;;
+    value_format_name: decimal_3
+    drill_fields: [review_id, user.user_id, user.name, text]
   }
 }

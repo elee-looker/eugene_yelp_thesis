@@ -6,6 +6,8 @@ view: review_count_DT {
       column: count {}
       column: average_stars {}
       column: city { field: business.city }
+      column: max_date {}
+      column: min_date {}
       derived_column: rank {
         sql: RANK() OVER (ORDER BY count DESC) ;;
       }
@@ -54,6 +56,14 @@ view: review_count_DT {
 
   dimension: average_stars {
     type: number
+  }
+
+  dimension: max_date {
+    type: date
+  }
+
+  dimension: min_date {
+    type: date
   }
 
 }

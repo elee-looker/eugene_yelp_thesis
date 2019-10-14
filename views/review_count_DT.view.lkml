@@ -56,6 +56,7 @@ view: review_count_DT {
 
   dimension: average_stars {
     type: number
+    value_format_name: decimal_2
   }
 
   dimension: max_date {

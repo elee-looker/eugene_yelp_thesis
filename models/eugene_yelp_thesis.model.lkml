@@ -33,7 +33,7 @@ explore: checkin {
 }
 
 explore: review {
-  always_join: [categories]
+  always_join: [categories, user]
 #   always_filter: {
 #     filters: {
 #       field: review.last_x_days

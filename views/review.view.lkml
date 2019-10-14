@@ -2,9 +2,14 @@ view: review {
   sql_table_name: yelp_new.review;;
   drill_fields: [review_id]
 
-  filter: last_x_days {
+  filter: last_60_days {
     type: yesno
     sql: ${date_date} >= DATE_ADD(${review_count_DT.max_date}, INTERVAL -60 DAY) ;;
+  }
+
+  filter: last_2_years {
+    type: yesno
+    sql: ${date_date} >= DATE_ADD(${review_count_DT.max_date}, INTERVAL -2 YEAR) ;;
   }
 
 #   dimension: check_yesno {
@@ -93,13 +98,13 @@ view: review {
 
   measure: count {
     type: count
-    drill_fields: [review_id, user.user_id, user.name, business.name, business.business_id]
+    drill_fields: [user.name, date_date, stars, text]
   }
 
   measure: std_dev {
     type: number
     sql: SQRT(1/(${count}-1) * sum(POW(${stars} - ${review_count_DT.average_stars}, 2))) ;;
     value_format_name: decimal_3
-    drill_fields: [review_id, user.user_id, user.name, text]
+    drill_fields: [user.name, date_date, stars, text]
   }
 }

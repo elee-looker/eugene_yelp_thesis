@@ -69,4 +69,9 @@ view: review {
     type: count
     drill_fields: [review_id, user.user_id, user.name, business.name, business.business_id]
   }
+
+  measure: std_dev {
+    type: number
+    sql: SQRT(1/(${count}-1) * sum(POW(${stars} - ${review_count_DT.average_stars}, 2))) ;;
+  }
 }

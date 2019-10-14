@@ -4,6 +4,7 @@ view: review_count_DT {
       column: business_id { field: business.business_id }
       column: state { field: business.state }
       column: count {}
+      column: average_stars {}
       column: city { field: business.city }
       derived_column: rank {
         sql: RANK() OVER (ORDER BY count DESC) ;;
@@ -15,6 +16,10 @@ view: review_count_DT {
       filters: {
         field: business.city
         value: "Las Vegas"
+      }
+      filters: {
+        field: review.count
+        value: ">200"
       }
 
       bind_filters: {
@@ -40,9 +45,14 @@ view: review_count_DT {
 
   dimension: rank {
     type: number
+    html: <strong><p style="color: #C70039; font-size: 250%; font-family: garamond">{{ rendered_value }}</p></strong> ;;
   }
 
   dimension: count {
+    type: number
+  }
+
+  dimension: average_stars {
     type: number
   }
 

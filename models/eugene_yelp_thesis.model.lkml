@@ -1,7 +1,7 @@
 connection: "lookerdata_publicdata_standard_sql"
 
 # include all the views
-include: "/views/**/*.view"
+include: "/**/**/*.view"
 
 datagroup: eugene_yelp_thesis_default_datagroup {
   # sql_trigger: SELECT MAX(id) FROM etl_log;;
@@ -13,7 +13,7 @@ persist_with: eugene_yelp_thesis_default_datagroup
 explore: business {
   join: business__hours {
     view_label: "Business: Hours"
-    sql: LEFT JOIN UNNEST([${business.hours}]) as business__hours ;;
+    sql: ,UNNEST([${business.hours}]) as business__hours ;;
     relationship: one_to_one
   }
 
@@ -86,3 +86,11 @@ explore: tip {
 }
 
 explore: user {}
+
+explore: review_count_DT {
+  join: categories {
+    type: left_outer
+    sql_on: ${review_count_DT.business_id} = ${categories.business_id} ;;
+    relationship: one_to_many
+  }
+}
